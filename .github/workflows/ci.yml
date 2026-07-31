@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # A formula that stops building is found on the day someone tries to install
+  # it, which is the worst day to find it.
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  formula:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: style
+        run: brew style --formula Formula/aru.rb
+
+      - name: audit
+        run: brew audit --formula --strict --online Formula/aru.rb
+
+      # The real check: it has to install and the binary has to run.
+      - name: install
+        run: |
+          brew install --build-from-source --verbose Formula/aru.rb
+          aru version
+          aru help
