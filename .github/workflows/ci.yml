@@ -16,17 +16,27 @@ jobs:
   formula:
     runs-on: macos-latest
     steps:
+      # Homebrew refuses to look at a formula outside a tap, so the checkout
+      # goes where taps live rather than into the default workspace.
       - uses: actions/checkout@v4
+        with:
+          path: checkout
+
+      - name: place the tap
+        run: |
+          tap="$(brew --repository)/Library/Taps/arandu-io/homebrew-tap"
+          mkdir -p "$(dirname "$tap")"
+          cp -R checkout "$tap"
 
       - name: style
-        run: brew style --formula Formula/aru.rb
+        run: brew style arandu-io/tap
 
       - name: audit
-        run: brew audit --formula --strict --online Formula/aru.rb
+        run: brew audit --strict --online arandu-io/tap/aru
 
       # The real check: it has to install and the binary has to run.
       - name: install
         run: |
-          brew install --build-from-source --verbose Formula/aru.rb
+          brew install --build-from-source arandu-io/tap/aru
           aru version
           aru help
