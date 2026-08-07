@@ -8,8 +8,8 @@
 class Aru < Formula
   desc "CLI for the Arandu framework: scaffolding, migrations and architecture checks"
   homepage "https://github.com/arandu-io/aru"
-  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "24c72212f9eb039291ad473d37cd5ed4f0a091bcde3d04058a4e3a938bfbc513"
+  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.10.0.tar.gz"
+  sha256 "ce254f5292134d7926a6cdcdd5f44023e4f464d06cf8391dbe413e5c09476bb1"
   license "MIT"
   head "https://github.com/arandu-io/aru.git", branch: "main"
 
@@ -30,5 +30,13 @@ class Aru < Formula
     # the first thing anyone types after installing.
     output = shell_output("#{bin}/aru migrate 2>&1", 1)
     assert_match "aru new", output
+
+    # A command from the current CLI, so a stale url in this file fails here
+    # instead of installing an old aru successfully. That is what happened: the
+    # formula sat on v0.3.0 for five minors, and the tap's CI stayed green the
+    # whole time -- it was proving the old tag still builds.
+    help = shell_output("#{bin}/aru help")
+    assert_match "trace", help
+    assert_match "schedule:run", help
   end
 end
