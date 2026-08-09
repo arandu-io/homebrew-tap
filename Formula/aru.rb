@@ -8,8 +8,8 @@
 class Aru < Formula
   desc "CLI for the Arandu framework: scaffolding, migrations and architecture checks"
   homepage "https://github.com/arandu-io/aru"
-  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.23.0.tar.gz"
-  sha256 "158adad796c203e0bed7500b32c899f4803af1d7cd0ae2890e0481bd776fd14a"
+  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.26.1.tar.gz"
+  sha256 "b50ff0f10eef30d369fdaa5036b1681ffa99c4a8cfd650b26b2c2107ed40404e"
   license "MIT"
   head "https://github.com/arandu-io/aru.git", branch: "main"
 
@@ -32,11 +32,17 @@ class Aru < Formula
     assert_match "aru new", output
 
     # A command from the current CLI, so a stale url in this file fails here
-    # instead of installing an old aru successfully. That is what happened: the
-    # formula sat on v0.3.0 for five minors, and the tap's CI stayed green the
-    # whole time -- it was proving the old tag still builds.
+    # instead of installing an old aru successfully. That is what happened
+    # twice: the formula sat on v0.3.0 for five minors, and then on v0.23.0 for
+    # three more, with this workflow green the whole time -- everything it
+    # asserted was also true of the old tag.
+    #
+    # This list is not the guard. The workflow compares the pinned tag against
+    # the newest release, which is the check that cannot go stale by itself;
+    # these are here so an install that somehow got the wrong tag fails loudly.
     help = shell_output("#{bin}/aru help")
     assert_match "trace", help
     assert_match "schedule:run", help
+    assert_match "font:add", help
   end
 end

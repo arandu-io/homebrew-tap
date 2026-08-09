@@ -28,6 +28,28 @@ jobs:
           mkdir -p "$(dirname "$tap")"
           cp -R checkout "$tap"
 
+      # The formula names a tag, and a tag that is not the newest one installs a
+      # CLI that refuses the views of a current project -- one message per line,
+      # none of which says the CLI is what is old. The formula sat six minors
+      # behind while this workflow stayed green, because everything it checked
+      # was also true of the old tag.
+      - name: the formula points at the newest release
+        run: |
+          latest=$(curl -fsSL https://api.github.com/repos/arandu-io/aru/releases/latest \
+            | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
+          [ -n "$latest" ] || latest=$(git ls-remote --tags --refs --sort=-v:refname \
+            https://github.com/arandu-io/aru.git | sed -n '1s|.*/||p')
+          pinned=$(sed -n 's|.*/tags/\(v[0-9.]*\)\.tar\.gz.*|\1|p' checkout/Formula/aru.rb)
+
+          echo "formula: $pinned"
+          echo "latest:  $latest"
+          if [ "$pinned" != "$latest" ]; then
+            echo "::error::the formula pins $pinned and aru released $latest."
+            echo "Update url and sha256 in Formula/aru.rb. Anyone installing from this tap"
+            echo "gets a CLI that refuses a current project's views for no visible reason."
+            exit 1
+          fi
+
       - name: style
         run: brew style arandu-io/tap
 
