@@ -1,0 +1,15 @@
+# One ecosystem: the actions the workflows pin. There is no Go module in this
+# repository, and there is no npm entry anywhere in this project -- nothing in
+# any of these repositories installs Node.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
