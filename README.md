@@ -19,9 +19,12 @@
 brew install arandu-io/tap/aru
 ```
 
-The formula builds `aru` from source, with the version stamped at build time and
-the tarball verified by sha256 — so a binary that reports a version is a binary
-built from that tag.
+The formula builds `aru` from source — currently pinned to `v0.30.0` — with the
+version stamped at build time and the tarball verified by sha256, so a binary
+that reports a version is a binary built from that tag. A weekly workflow
+compares the pinned tag against the newest release on `arandu-io/aru` and fails
+the moment they drift — the failure mode it exists to catch is a formula stuck
+behind the CLI it installs, with every other check still green.
 
 ## Learning Arandu
 
