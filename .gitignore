@@ -1,3 +1,6 @@
+# No Go code and no build step here, so the one artifact worth naming is what
+# the editor and the OS leave behind on a checkout.
+.DS_Store
 
 # Configuracao do harness. Vive na raiz do diretorio de trabalho, nao aqui:
 # um arquivo por repositorio ja divergiu, e o hook de commit-msg em .githooks/
