@@ -20,37 +20,27 @@ before their first patch.
 ## Before you open a pull request
 
 ```
-gofmt -l $(find . -name '*.go' -not -path '*/testdata/*' -not -name '*.kyse.go')   # no output
-go vet ./...
-go test -race ./...
+brew style arandu-io/tap
+brew audit --strict --online arandu-io/tap/aru
+brew install arandu-io/tap/aru
 ```
 
-CI runs exactly this, plus a check that no new dependency entered the core: the
-framework depends on the standard library and `golang.org/x/crypto`, and nothing
-else. A pull request that adds a dependency there needs to argue for it first,
-in an issue.
+CI runs exactly this, and one more check that only matters here: that the formula
+points at the newest published release. A tap whose formula lags is a tap that
+installs the wrong program while every check passes.
+
+There is no Go in this repository -- it holds one formula and the files GitHub
+asks every repository for. If you came here from another repository in this
+project and expected `go test`, that is why it is absent.
 
 ## Where a test goes
 
-Beside the code it tests, named `*_test.go`, in the same directory. There is no
-`tests/` directory, and that is not style: `go test` attributes coverage per
-directory, so a test filed elsewhere leaves the package under test reporting
-0% -- and it can only reach what the package exports.
+Nowhere, and that is the honest answer: this repository has no Go. What stands in
+for a test suite is `brew audit --strict --online`, which fetches the artifact the
+formula names and checks that it is what the formula says it is.
 
-Which package the test declares is a real choice, and it answers one question:
-
-| declare | when |
-|---|---|
-| `package X_test` | this is the **contract**. The test sees what a caller sees, which is the point |
-| `package X` | this is the **implementation**, and the test genuinely needs something the package does not export |
-
-Prefer the first. Take the second only when you use it -- `plans/testpackages.go`
-in the arandu-io working tree checks exactly that, by intersecting the
-identifiers a test names with what its package declares unexported, and the
-checklist runs it across every repository.
-
-A `package main` has no external form: it cannot be imported, so its tests are
-internal and that is the end of it.
+The `install` step in CI is the one that would catch a broken formula, because it
+is the only one that runs the program.
 
 ## What the commit message says
 
