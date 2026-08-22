@@ -19,12 +19,15 @@
 brew install arandu-io/tap/aru
 ```
 
-The formula builds `aru` from source — currently pinned to `v0.30.0` — with the
-version stamped at build time and the tarball verified by sha256, so a binary
-that reports a version is a binary built from that tag. A weekly workflow
-compares the pinned tag against the newest release on `arandu-io/aru` and fails
-the moment they drift — the failure mode it exists to catch is a formula stuck
-behind the CLI it installs, with every other check still green.
+The formula builds `aru` from source, at the tag named in
+[`Formula/aru.rb`](Formula/aru.rb) — with the version stamped at build time and
+the tarball verified by sha256, so a binary that reports a version is a binary
+built from that tag. The tag is not repeated in this sentence on purpose: it was,
+and it went stale two minors behind the formula it described, silently, because
+nothing checks prose. A weekly workflow compares the pinned tag against the
+newest release on `arandu-io/aru` and fails the moment they drift — the failure
+mode it exists to catch is a formula stuck behind the CLI it installs, with every
+other check still green.
 
 ## Learning Arandu
 
@@ -45,7 +48,9 @@ next phase, and it will be an Arandu application.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Before opening a pull request, the three
-commands at the top of that file have to pass, and CI runs exactly them.
+`brew` commands it lists have to pass. CI runs those three and the tag
+comparison above — which is there because it is the one failure the other three
+cannot report.
 
 ## Security Vulnerabilities
 
