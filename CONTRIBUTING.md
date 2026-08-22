@@ -25,9 +25,11 @@ brew audit --strict --online arandu-io/tap/aru
 brew install arandu-io/tap/aru
 ```
 
-CI runs exactly this, and one more check that only matters here: that the formula
-points at the newest published release. A tap whose formula lags is a tap that
-installs the wrong program while every check passes.
+CI runs these, and a few more checks that only matter to a tap;
+`.github/workflows/ci.yml` is the one that decides, not this paragraph. The check
+worth knowing about before you open the pull request is that the formula points at
+the newest published release. A tap whose formula lags is a tap that installs the
+wrong program while every check passes.
 
 There is no Go in this repository -- it holds one formula and the files GitHub
 asks every repository for. If you came here from another repository in this
