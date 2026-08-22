@@ -18,7 +18,7 @@ jobs:
     steps:
       # Homebrew refuses to look at a formula outside a tap, so the checkout
       # goes where taps live rather than into the default workspace.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: checkout
 
