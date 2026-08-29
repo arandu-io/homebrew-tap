@@ -8,8 +8,8 @@
 class Aru < Formula
   desc "CLI for the Arandu framework: scaffolding, migrations and architecture checks"
   homepage "https://github.com/arandu-io/aru"
-  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.34.0.tar.gz"
-  sha256 "0a4e0ee9bfcf54420654d09e9cb0acb21e48df946d28d6e5398f0e5ade14f8b4"
+  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.36.0.tar.gz"
+  sha256 "73565df4708db81788d26c1142df4a439a39b082e55be47370354b4581aead1c"
   license "MIT"
   head "https://github.com/arandu-io/aru.git", branch: "main"
 
@@ -44,5 +44,6 @@ class Aru < Formula
     assert_match "trace", help
     assert_match "schedule:run", help
     assert_match "font:add", help
+    assert_match "lsp", help
   end
 end
