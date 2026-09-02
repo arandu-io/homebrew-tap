@@ -60,5 +60,6 @@ jobs:
       - name: install
         run: |
           brew install --build-from-source arandu-io/tap/aru
+          brew test arandu-io/tap/aru
           aru version
           aru help
