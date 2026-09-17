@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
   # A formula that stops building is found on the day someone tries to install
   # it, which is the worst day to find it.

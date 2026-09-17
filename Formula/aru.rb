@@ -8,14 +8,15 @@
 class Aru < Formula
   desc "CLI for the Arandu framework: scaffolding, migrations and architecture checks"
   homepage "https://github.com/arandu-io/aru"
-  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.56.0.tar.gz"
-  sha256 "ff35b2ce20158a371746d1578ca28e16322c575bf1fb1b35108e02023e17d433"
+  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.56.1.tar.gz"
+  sha256 "b00c5bb5a14953491613812de8c4d0ec6373084fe5f7f8dce5ca30e2d18acb2f"
   license "MIT"
   head "https://github.com/arandu-io/aru.git", branch: "main"
 
   depends_on "go" => :build
 
   def install
+    ENV["GOWORK"] = "off"
     ldflags = "-s -w -X main.version=#{version}"
     system "go", "build", *std_go_args(ldflags:)
   end
