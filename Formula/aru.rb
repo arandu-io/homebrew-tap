@@ -8,8 +8,8 @@
 class Aru < Formula
   desc "CLI for the Arandu framework: scaffolding, migrations and architecture checks"
   homepage "https://github.com/arandu-io/aru"
-  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.68.0.tar.gz"
-  sha256 "5ab319f929de76b65f58653f59802b93fd717995d9ac506281354aacb7a9c668"
+  url "https://github.com/arandu-io/aru/archive/refs/tags/v0.69.0.tar.gz"
+  sha256 "b76da236d1e427ebdeee058539d7f8fb46e981cd8f74a85657118046e04b417e"
   license "MIT"
   head "https://github.com/arandu-io/aru.git", branch: "main"
 
